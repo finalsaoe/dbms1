@@ -1,0 +1,37 @@
+package connector;
+import com.mongodb.*;
+public class mongo2 {
+   public static void main(String[]args) {
+	   MongoClient mongoclient =new MongoClient("localhost",27017);
+	   System.out.println("Connection sucessfull");
+	    DB d1=mongoclient.getDB("mongo10");
+	    DBCollection coll=d1.getCollection("mongo10");
+	    //insert
+	    System.out.println("Inserting data into tables");
+	    BasicDBObject d2=new BasicDBObject("id","104").append("Name", "Pushkar").append("Div", "C");	 
+	    coll.insert(d2);
+	    DBCursor cur=coll.find();
+	    while(cur.hasNext()) {
+	    	System.out.println(cur.next());
+	    }
+	    //delete
+	    System.out.println("After deleting the record");
+	    BasicDBObject d3=new BasicDBObject("id","104").append("Name", "Pushkar").append("Div", "C");
+	   	 coll.remove(d3);	  	   
+	    cur=coll.find();
+	    while(cur.hasNext()) {
+	    	System.out.println(cur.next());
+	    }
+	    //update
+	    System.out.println("Updating data");
+	    BasicDBObject query=new BasicDBObject();
+	    query.put("Name", "Omkar");
+	    BasicDBObject n1=new BasicDBObject();
+	    n1.put("$set",new BasicDBObject("Name","Durvankur"));
+	   coll.update(query, n1);
+	    cur=coll.find();
+	    while(cur.hasNext()) {
+	    	System.out.println(cur.next());
+	    }
+   }
+}
